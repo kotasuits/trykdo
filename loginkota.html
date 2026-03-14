@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kota Doria | Admin Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: var(--bg);
+        }
+        .login-card {
+            background: var(--surface);
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .login-card h1 {
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -1px;
+        }
+        .input-group {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            font-family: inherit;
+            background: #f9f9f9;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--cta-bg);
+            color: var(--cta-text);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-btn:hover {
+            background: var(--cta-hover);
+        }
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h1>Admin Access</h1>
+        
+        <div style="display: flex; gap: 0.5rem; background: #f0f0f0; padding: 0.3rem; border-radius: 10px; margin-bottom: 2rem;">
+            <button id="btn-gh" style="flex: 1; border: none; padding: 0.6rem; border-radius: 8px; cursor: pointer; font-weight: 600; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">GitHub (Free)</button>
+            <button id="btn-srv" style="flex: 1; border: none; padding: 0.6rem; border-radius: 8px; cursor: pointer; font-weight: 600; background: transparent; color: #666;">Server Mode</button>
+        </div>
+
+        <!-- GitHub Login Form -->
+        <form id="gh-login-form">
+            <div class="input-group">
+                <label for="gh-token">Personal Access Token (PAT)</label>
+                <input type="password" id="gh-token" required placeholder="ghp_xxxxxxxxxxxx">
+                <p style="font-size: 0.7rem; color: #666; margin-top: 0.4rem; text-align: left;">
+                    Need a token? <a href="https://github.com/settings/tokens/new?scopes=repo&description=Kota%20Catalog%20Admin" target="_blank" style="color: var(--cta-bg); font-weight: 600;">Generate one here</a> (Select 'repo' scope)
+                </p>
+            </div>
+            <div class="input-group">
+                <label for="gh-repo">Repository Path</label>
+                <input type="text" id="gh-repo" required placeholder="username/repository">
+            </div>
+            <button type="submit" class="login-btn">Connect GitHub Admin</button>
+        </form>
+
+        <!-- Legacy Server Form -->
+        <form id="login-form" style="display: none;">
+            <div class="input-group">
+                <label for="password">Server Access Password</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="login-btn">Secure Server Login</button>
+        </form>
+        
+        <div id="error-msg" class="error-msg">Connection failed. Please check your credentials.</div>
+    </div>
+
+    <script>
+        const btnGh = document.getElementById('btn-gh');
+        const btnSrv = document.getElementById('btn-srv');
+        const ghForm = document.getElementById('gh-login-form');
+        const srvForm = document.getElementById('login-form');
+        const errorMsg = document.getElementById('error-msg');
+
+        // Toggle Tabs
+        btnGh.onclick = () => {
+            btnGh.style.background = 'white'; btnGh.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)'; btnGh.style.color = 'black';
+            btnSrv.style.background = 'transparent'; btnSrv.style.boxShadow = 'none'; btnSrv.style.color = '#666';
+            ghForm.style.display = 'block'; srvForm.style.display = 'none';
+        };
+        btnSrv.onclick = () => {
+            btnSrv.style.background = 'white'; btnSrv.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)'; btnSrv.style.color = 'black';
+            btnGh.style.background = 'transparent'; btnGh.style.boxShadow = 'none'; btnGh.style.color = '#666';
+            srvForm.style.display = 'block'; ghForm.style.display = 'none';
+        };
+
+        // GitHub Login Handler
+        ghForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const token = document.getElementById('gh-token').value.trim();
+            const repo = document.getElementById('gh-repo').value.trim();
+            
+            if (token && repo) {
+                localStorage.setItem('gh_token', token);
+                localStorage.setItem('gh_repo', repo);
+                localStorage.setItem('admin_mode', 'github');
+                // We set admin_token to something so admin.js thinks we are logged in
+                localStorage.setItem('admin_token', 'gh_active'); 
+                window.location.href = 'adminkota.html';
+            }
+        });
+
+        // Server Login Handler
+        srvForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            errorMsg.style.display = 'none';
+            
+            try {
+                const response = await fetch('api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password })
+                });
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    localStorage.setItem('admin_token', data.token);
+                    localStorage.setItem('admin_mode', 'server');
+                    window.location.href = 'adminkota.html';
+                } else {
+                    errorMsg.style.display = 'block';
+                }
+            } catch (err) {
+                alert('Server connection error.');
+            }
+        });
+
+        // Auto-fill from URL if possible
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('mode') === 'server') btnSrv.click();
+    </script>
+</body>
+</html>

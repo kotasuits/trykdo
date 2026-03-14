@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kota Doria Wholesale Only | Product Catalog</title>
+    <meta name="description"
+        content="Kota Doria Wholesale Only — Premium textile catalog. Embroidery, Block Print, Brush Paint, Screen Print. Minimum order 30 pieces. Call 9664498112 or 8094689242.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <h1 class="logo">Kota Doria</h1>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Catalog</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h2 class="hero-title">Kota Doria <span>Wholesale Only</span></h2>
+            <p class="hero-subtitle">Premium handcrafted textiles — Embroidery, Block Print, Brush Paint & Screen Print.
+            </p>
+            <div class="moq-badge">
+                <span class="moq-label">Minimum Order Quantity</span>
+                <span class="moq-value">30 Pieces</span>
+            </div>
+            <div class="contact-strip">
+                <a href="tel:9664498112" class="contact-btn">📞 9664498112</a>
+                <a href="tel:8094689242" class="contact-btn">📞 8094689242</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="catalog-section">
+        <div class="filters">
+            <select id="category-filter" class="category-dropdown">
+                <option value="all">All Designs</option>
+                <option value="embroidery">Embroidery</option>
+                <option value="block-print">Block Print</option>
+                <option value="brush-paint">Brush Paint</option>
+                <option value="screen-print">Screen Print</option>
+            </select>
+        </div>
+
+        <div id="product-grid" class="product-grid">
+            <!-- Products will be injected here via JavaScript -->
+        </div>
+    </main>
+
+    <footer class="glass-footer" id="contact">
+        <div class="footer-contact">
+            <h3 style="margin-bottom: 0.75rem; font-size: 1.2rem;">Kota Doria Wholesale Only</h3>
+            <div class="footer-moq">Minimum Order Quantity 30 pieces</div>
+            <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 0.75rem;">
+                <a href="tel:9664498112" style="color: var(--accent); text-decoration: none; font-size: 1rem;">📞
+                    9664498112</a>
+                <a href="tel:8094689242" style="color: var(--accent); text-decoration: none; font-size: 1rem;">📞
+                    8094689242</a>
+            </div>
+        </div>
+        <p style="margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.85rem;">© 2026 Kota Doria Wholesale
+            Only. All rights reserved.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

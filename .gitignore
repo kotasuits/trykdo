@@ -1,0 +1,22 @@
+# Server-side scripts (not needed for GitHub Pages)
+upload.php
+api.php
+express-app.js
+server.js
+supabase_setup.sql
+functions/
+.env*
+node_modules/
+package-lock.json
+
+# Local Data (Should be committed if used as db, but usually we want to keep it)
+# data.json
+# categories.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
